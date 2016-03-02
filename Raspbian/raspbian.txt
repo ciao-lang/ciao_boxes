@@ -1,0 +1,40 @@
+Compiling Ciao on Raspberry Pi
+------------------------------
+
+Requirements:
+
+ - Install qemu. E.g., for osx:
+   $ homebrew install qemu
+
+ - Download kernel-qemu (e.g., from https://github.com/dhruvvyas90/qemu-rpi-kernel)
+ - Download raspbian (from official images)
+
+Comment line at /etc/ld.so.preload. You can boot directly to bash and use 'nano':
+
+ $ qemu-system-arm -kernel qemu-rpi-kernel/kernel-qemu-3.10.25-wheezy \
+     -cpu arm1176 -m 256 -M versatilepb \
+     -no-reboot -serial stdio \
+     -append "root=/dev/sda2 panic=1 rootfstype=ext4 rw init=/bin/bash" \
+     -hda 2015-05-05-raspbian-wheezy.img
+
+Then restart:
+
+ $ qemu-system-arm -kernel qemu-rpi-kernel/kernel-qemu-3.10.25-wheezy \
+     -cpu arm1176 -m 256 -M versatilepb \
+     -net nic -net user,hostfwd=tcp::2222-:22,hostfwd=tcp::5800-:5800,hostfwd=tcp::5900-:5900 \
+     -serial stdio \
+     -append "root=/dev/sda2" \
+     -hda 2015-05-05-raspbian-wheezy.img
+
+The user/passwd on Raspbian are pi/raspberry.
+
+The installation instructions for Ciao in Debian works on Raspbian.
+
+Cross-compilation for ARM
+-------------------------
+
+  TODO: Fix cross-compilation support in Ciao
+    ("--core:os=LINUX --core:arch=arm" is not enough)
+
+  See https://github.com/twobitcircus/rpi-build-and-boot for setting
+  up a cross-compilation environment for ARM and Raspbian.
