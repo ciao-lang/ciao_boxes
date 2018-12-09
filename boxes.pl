@@ -7,7 +7,8 @@
 :- use_module(library(format)).
 :- use_module(library(process)).
 :- use_module(library(pathnames)).
-:- use_module(library(strings), [write_string/1]).
+:- use_module(library(stream_utils), [write_string/1]).
+:- use_module(library(lists), [member/2]).
 
 % A dummy script, just for testing
 
